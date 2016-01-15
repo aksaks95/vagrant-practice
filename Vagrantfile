@@ -68,9 +68,8 @@ Vagrant.configure(2) do |config|
       sudo apt-get update
       sudo apt-get install -y apache2
       
-      sudo add-apt-repository ppa:git-core/ppa
-      sudo apt-get update
-      sudo apt-get install git
+      sudo apt-get install ppa-purge
+      sudo ppa-purge ppa:git-core/ppa
 
    SHELL
 end
