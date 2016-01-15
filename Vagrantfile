@@ -22,7 +22,7 @@ Vagrant.configure(2) do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
-     config.vm.network "forwarded_port", guest: 80, host: 8080
+     config.vm.network "forwarded_port", guest: 80, host: 4568
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -43,13 +43,13 @@ Vagrant.configure(2) do |config|
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-  # config.vm.provider "virtualbox" do |vb|
-  #   # Display the VirtualBox GUI when booting the machine
+  config.vm.provider "virtualbox" do |vb|
+      #Display the VirtualBox GUI when booting the machine
   #   vb.gui = true
   #
   #   # Customize the amount of memory on the VM:
-  #   vb.memory = "1024"
-  # end
+      vb.memory = "1024"
+  end
   #
   # View the documentation for the provider you are using for more
   # information on available options.
@@ -67,6 +67,10 @@ Vagrant.configure(2) do |config|
    config.vm.provision "shell", inline: <<-SHELL
       sudo apt-get update
       sudo apt-get install -y apache2
+      if ! [ -L /var/www ]; then
+        rm -rf /var/www
+        ln -fs /vagrant /var/www
+      fi
       
       sudo add-apt-repository ppa:git-core/ppa
       sudo apt-get update
